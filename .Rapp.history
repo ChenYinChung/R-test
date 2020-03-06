@@ -1,0 +1,75 @@
+setwd(dir="/Users/sammy/test/r/")
+getwd
+getwd()
+data <- read.table("CVD_ALL.csv", sep=',' , header=T , encoding="UTF-8")
+data
+data <- read.table("CVD_ALL.csv", sep=',')
+data
+data <- read.table("CVD_ALL.csv", sep=',' ,header=F)
+data
+data <- read.table("CVD_ALL.csv", sep=',' ,header=F , enc2utf8)
+data <- read.csv("CVD_ALL.csv", sep=',' ,header=T)
+data
+data <- read.csv("CVD_ALL.csv", sep=',' ,header=T, fileEncoding="UTF-8")
+data <- read.csv("CVD_ALL.csv", sep=',' ,header=T, fileEncoding="UTF-8")
+data <- read.csv("CVD_ALL.csv", sep=',' , header=T, fileEncoding="UTF-8")
+data <- read.csv("CVD_ALL.csv", sep=',',fileEncoding="UTF-8")
+data <- read.csv("CVD_ALL.csv", sep=',' , header=T, fileEncoding="UTF-8-BOM")
+data <- read.table("CVD_ALL.csv", sep=',' , header=T, fileEncoding="UTF-8")
+data <- read.table("CVD_ALL.csv", sep=',' , header=T, fileEncoding="UTF-8")
+data <- read.table("CVD_ALL.csv", sep=',' , header=T)
+data$[1,]
+data[1,]
+data[3,]
+data[4,]
+data <- read.table("CVD_ALL.csv", sep=',' , header=F)
+data[3,]
+data[c(3,6),]
+gm <- usbset(data,V4 == 1)
+gm <- subset(data,V4 == 1)
+gm
+gm <- subset(data,V4 == 0)
+gm
+mean(data$V4)
+mean(data$V4)
+gm <- subset(data,V4 == 0)
+mean(gm)
+gm <- subset(data,V4 == 0)
+gm
+data <- read.table("CVD_ALL.csv", sep=',' , header=F)
+data$heart
+data <- read.table("CVD_ALL.csv", sep=',' , header=T)
+data$heart
+mean(data$heart)
+data <- read.table("CVD_ALL.csv", sep=',' , header=T)
+tapply(data$age,data$gender,mean)
+tapply(data$age,data$gender,mean)
+mean(subset(data,gender=1)$age)
+mean(subset(data,gender="1")$age)
+gm <- length(data$gender)
+gm
+gm <- subset(data, gender=1)
+length(gm)
+gm
+t.test(data$age,mu=60)
+plot.formula
+plot()
+plot(data=data)
+plot(age,data=data)
+dim(data)
+names(data)
+dt <- read.table("CVD_ALL.csv",sep=",",encoding="UTF-8")
+dt
+dt <- read.csv("CVD_ALL.csv",sep=",",encoding="UTF-8")
+dt
+dt <- read.csv("CVD_ALL.csv",sep=",",encoding="UTF-8")
+dt
+dt <- read.csv("CVD_ALL.csv",sep=",",encoding="UTF-16")
+dt
+dt <- read.csv("CVD_ALL.csv",sep=",",encoding="UTF-8")
+dt
+dt <- read.csv("CVD_ALL.csv",sep=",",encoding="UTF-16")
+dt
+sessionInfo()
+Sys.getlocale()
+Sys.getlocale()
