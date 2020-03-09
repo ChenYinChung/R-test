@@ -9,7 +9,7 @@ query <- function(vendorId, startDate, endDate){
                         TO_NUMBER(substring(draw_result from 7 for 1),'9') as loc4,
                         TO_NUMBER(substring(draw_result from 9 for 1),'9') as loc5
                         from self_open_result where vendor_id= 'VENDOR_ID' and game_id='NYSSC30S' 
-                        and create_date between 'START_DATE' and 'END_DATE' and draw_result IS NOT NULL limit 5000"
+                        and create_date between 'START_DATE' and 'END_DATE' and draw_result IS NOT NULL"
   #更換vendor id
   queryString <- gsub("VENDOR_ID",vendorId,queryString)
 
@@ -24,8 +24,17 @@ query <- function(vendorId, startDate, endDate){
   return(result)
 }
 
+
+showMatrix <- function(list){
+  #location <- c(list[["l1"]],list[["l2"]],list[["l3"]],list[["l4"]],list[["l5"]])
+  location <- c(list[[1]],list[[2]],list[[3]],list[[4]],list[[5]])
+  matrix(location,10,5,dimnames = list(c("球號0","球號1","球號2","球號3","球號4","球號5","球號6","球號7","球號8","球號9"),c("萬位","千位","百位","拾位","個位")))
+  
+}
+
+
 #總表
-matrixList <- function(result){
+count <- function(result){
   index <- 0
   loc1 = list()
   loc2 = list()
@@ -44,19 +53,24 @@ matrixList <- function(result){
     index <- index +1
   }
   
-  
-  location <- c(loc1_list,loc2_list,loc3_list,loc4_list,loc5_list)
-  matrix(location,10,5,dimnames = list(c("球號0","球號1","球號2","球號3","球號4","球號5","球號6","球號7","球號8","球號9"),c("萬位","千位","百位","拾位","個位")))
+  return(newList)
 }
 
 # 均勻分配
 # w愈接近1,p-value 0.05 , 95%至少
-normalTest<-function(result){
-  print(shapiro.test(result$loc1))
-  print(shapiro.test(result$loc2))
-  print(shapiro.test(result$loc3))
-  print(shapiro.test(result$loc4))
-  print(shapiro.test(result$loc5))
+normalTest<-function(loc1,loc2,loc3,loc4,loc5){
+  
+  l1 <- c(loc1[1],loc1[2],loc1[3],loc1[4],loc1[5],loc1[6],loc1[7],loc1[8],loc1[9],loc1[10])
+  l2 <- c(loc2[1],loc2[2],loc2[3],loc2[4],loc2[5],loc2[6],loc2[7],loc2[8],loc2[9],loc2[10])
+  l3 <- c(loc3[1],loc3[2],loc3[3],loc3[4],loc3[5],loc3[6],loc3[7],loc3[8],loc3[9],loc3[10])
+  l4 <- c(loc4[1],loc4[2],loc4[3],loc4[4],loc4[5],loc4[6],loc4[7],loc4[8],loc4[9],loc4[10])
+  l5 <- c(loc5[1],loc5[2],loc5[3],loc5[4],loc5[5],loc5[6],loc5[7],loc5[8],loc5[9],loc5[10])
+  
+  print(shapiro.test(l1))
+  print(shapiro.test(l2))
+  print(shapiro.test(l3))
+  print(shapiro.test(l4))
+  print(shapiro.test(l5))
 }
 
 #單雙出現次數
@@ -77,17 +91,19 @@ parseSD <- function(result){
 }
 
 
-result <- query("18LUCK",'2020-03-02','2020-03-04')
+result <- query("18LUCK",'2020-03-01','2020-03-09')
+
+newList = count(result)
+showMatrix(newList)
 
 dim(result)
 
-matrixList(result)
-normalTest(result)
+normalTest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
 
-v <-parseSD(result)
-v
+#normalTest(result)
 
-sum(result$loc1)
+#v <-parseSD(result)
+
 
 #close connection
 closeConnection(conn)
