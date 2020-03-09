@@ -1,5 +1,7 @@
 # Connecting to RPostgreSQL
+require(RPostgreSQL)
 library(RPostgreSQL)
+
 
 createConnection <- function(){
   #Enter the values for you database connection
