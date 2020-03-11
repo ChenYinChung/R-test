@@ -13,14 +13,14 @@ createConnection <- function(){
   
   tryCatch({
     drv <- dbDriver("PostgreSQL")
-    print("Connecting to database")
+#    print("Connecting to database")
     conn <- dbConnect(drv, 
                       dbname = dsn_database,
                       host = dsn_hostname, 
                       port = dsn_port,
                       user = dsn_uid, 
                       password = dsn_pwd)
-    print("Connected!")
+ #   print("Connected!")
     return(conn)
   },
   error=function(cond) {

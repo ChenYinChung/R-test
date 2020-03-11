@@ -51,3 +51,21 @@ shapiro.test(x)
 
 # 常態性檢定
 shapiro.test(y)
+
+
+x.list <- list(
+  a = rgeom(6, prob = 0.1),
+  b = rgeom(6, prob = 0.4),
+  c = rgeom(6, prob = 0.7)
+)
+x.list
+
+x.uniq <- vector("list", length(x.list))
+for ( i in seq_along(x.list) ) {
+  # 對 x.list 的每個元素進行 unique 運算
+  x.uniq[[i]] <- unique(x.list[[i]])
+}
+# 設定 x.uniq 的元素名稱
+names(x.uniq) <- names(x.list)
+
+
