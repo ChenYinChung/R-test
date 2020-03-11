@@ -41,22 +41,8 @@ normalTest<-function(loc1,loc2,loc3,loc4,loc5){
   l4 <- c(loc4[1],loc4[2],loc4[3],loc4[4],loc4[5],loc4[6],loc4[7],loc4[8],loc4[9],loc4[10])
   l5 <- c(loc5[1],loc5[2],loc5[3],loc5[4],loc5[5],loc5[6],loc5[7],loc5[8],loc5[9],loc5[10])
   
-  print(summary(l1))
-  writeLines("")
-  print(summary(l2))
-  writeLines("")
-  print(summary(l3))
-  writeLines("")
-  print(summary(l4))
-  writeLines("")
-  print(summary(l5))
-  writeLines("")
-  print(shapiro.test(l1))
-  print(shapiro.test(l2))
-  print(shapiro.test(l3))
-  print(shapiro.test(l4))
-  print(shapiro.test(l5))
-  
+  n <- list(summary(l1),summary(l2),summary(l3),summary(l4),summary(l5),shapiro.test(l1),shapiro.test(l2),shapiro.test(l3),shapiro.test(l4),shapiro.test(l5))
+  return(n)
 }
 
 ttest<-function(loc1,loc2,loc3,loc4,loc5){
@@ -66,11 +52,8 @@ ttest<-function(loc1,loc2,loc3,loc4,loc5){
   l4 <- c(loc4[1],loc4[2],loc4[3],loc4[4],loc4[5],loc4[6],loc4[7],loc4[8],loc4[9],loc4[10])
   l5 <- c(loc5[1],loc5[2],loc5[3],loc5[4],loc5[5],loc5[6],loc5[7],loc5[8],loc5[9],loc5[10])
   avg <- mean(l1)
-  print(t.test(l1,mu=avg))
-  print(t.test(l2,mu=avg))
-  print(t.test(l3,mu=avg))
-  print(t.test(l4,mu=avg))
-  print(t.test(l5,mu=avg))
+  n<- list(t.test(l1,mu=avg),t.test(l2,mu=avg),t.test(l3,mu=avg),t.test(l4,mu=avg),t.test(l5,mu=avg))
+  return(n)
 }
 
 singleDouble <- function (loc){

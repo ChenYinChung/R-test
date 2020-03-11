@@ -57,9 +57,11 @@ main <- function (game,crawler,startDate,endDate){
   # 出現次數，對子，三條
   fu<-frequenciesUnique(result)
   print(fu)
-  #normalTest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
-  #ttest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
   
+  n<-normalTest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
+  print(n)
+  t<-ttest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
+  print(t)
   closeConnection(conn)
 }
 
@@ -67,11 +69,6 @@ main <- function (game,crawler,startDate,endDate){
 # 官方彩，統一在STG db 讀取crawler寫入的資料
 #
 #
-print("================= TXFFC")
-main("TXFFC",'TJ','2020-03-01','2020-03-09')
-print("================= TXFFC======================")
-
-
 print("================= TXFFC")
 main("TXFFC",'TJ','2020-03-01','2020-03-09')
 print("================= TXFFC======================")

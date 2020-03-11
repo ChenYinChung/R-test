@@ -1,7 +1,8 @@
 path<-getwd()
 source(paste0(path,"/lottery/common/db01-sle.r"))
 source(paste0(path,"/lottery/common/statistic-ssc.r"))
-
+library(rJava)
+library(xlsx)
 query <- function(conn,vendorId,gameId, startDate, endDate){
   queryString <- "select TO_NUMBER(substring(draw_result from 1 for 1),'9') as loc1,
                         TO_NUMBER(substring(draw_result from 3 for 1),'9') as loc2,
@@ -55,8 +56,10 @@ main <- function (vendorId,gameId,startDate,endDate){
   fu<-frequenciesUnique(result)
   print(fu)
   
-  #normalTest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
-  #ttest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
+  n<-normalTest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
+  print(n)
+  t<-ttest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
+  print(t)
   
   closeConnection(conn)
 }
@@ -65,12 +68,5 @@ main <- function (vendorId,gameId,startDate,endDate){
 #自開彩獎號驗證，以Production實際內容比對
 #
 #
-
-print("================= 18LUCK")
 main("18LUCK",'NYSSC30S','2020-03-01','2020-03-10')
-print("================= 18LUCK======================")
-
-
-print("================= MANBETX")
 main("MANBETX",'NYSSC30S','2020-03-01','2020-03-10')
-print("================= MANBETX======================")
