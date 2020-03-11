@@ -1,36 +1,10 @@
-path<-getwd()
-source(paste0(path,"/lottery/db01-sle.r"))
-
-query <- function(conn,vendorId,gameId, startDate, endDate){
-  queryString <- "select TO_NUMBER(substring(draw_result from 1 for 1),'9') as loc1,
-                        TO_NUMBER(substring(draw_result from 3 for 1),'9') as loc2,
-                        TO_NUMBER(substring(draw_result from 5 for 1),'9') as loc3,
-                        TO_NUMBER(substring(draw_result from 7 for 1),'9') as loc4,
-                        TO_NUMBER(substring(draw_result from 9 for 1),'9') as loc5
-                        from self_open_result where vendor_id= 'VENDOR_ID' and game_id='GAME_ID' 
-                        and create_date between 'START_DATE' and 'END_DATE' and draw_result IS NOT NULL"
-  #更換vendor id
-  queryString <- gsub("VENDOR_ID",vendorId,queryString)
-  
-  #更換彩種
-  queryString <- gsub("GAME_ID",gameId,queryString)
-  
-  #更換vendor id
-  queryString <- gsub("START_DATE",startDate,queryString)
-  
-  #更換vendor id
-  queryString <- gsub("END_DATE",endDate,queryString)
-  
-  
-  result <- dbGetQuery(conn,queryString)
-  return(result)
-}
-
 #陣列顯示
-showMatrix <- function(list){
+frequenciesLocation <- function(list){
+  
   location <- c(list[[1]],list[[2]],list[[3]],list[[4]],list[[5]])
   m <- matrix(location,10,5,dimnames = list(c("球號0","球號1","球號2","球號3","球號4","球號5","球號6","球號7","球號8","球號9"),c("萬位","千位","百位","拾位","個位")))
-  print(m)
+  return(m)
+  
 }
 
 
@@ -114,83 +88,82 @@ singleDouble <- function (loc){
   return(listSD)
 }
 
-
-loc.unique<- function(result){
+#出現次數
+frequenciesUnique<- function(result){
   loop <- length(result$loc1)
   index <- 1
   pairs <- 0
   triple <- 0
-  fokOrfh <-0
+  fourOfKind <-0
+  fullHouse <-0
+  fiveOfKind <- 0
   while(index<loop){
     l<-list(result$loc1[index],result$loc2[index],result$loc3[index],result$loc4[index],result$loc5[index])  
     x<-unique(l)
-    if(length(x)==4){
+    if(length(x)==5){
+      #每個都不同 
+    }else if(length(x)==4){
       pairs <- pairs+1
     }else if(length(x)==3){
       triple <- triple+1
+    }else if (length(x)==2){
+      
+      v1 <-l[1]
+      c <-0
+      
+      for(v in l){
+        if(v==v1){
+          c <- c+1
+        }
+      }
+      
+      if(c == 3){
+        fullHouse<-fullHouse +1
+      }else{
+        fourOfKind <- fourOfKind +1
+      }
+      
     }else{
-      fokOrfh <- fokOrfh+1
+      fiveOfKind <- fiveOfKind +1
     }
     
     index<-index+1
   }
   
-  px <-pairs/loop
-  print(paste("總數=",loop))
-  print(paste("對子機率值：",px))
-  
+  px <-round(pairs/loop,digits = 4)
+  pt <- round(triple/loop,digits = 4)
+  pfh <- round(fullHouse/loop,digits = 4)
+  pfk <-round(fourOfKind/loop,digits = 4)
+  pff <- round(fiveOfKind/loop,digits = 4)
+  l<- list(pairs,triple,fullHouse,fourOfKind,fiveOfKind,px,pt,pfh,pfk,pff)
+  m <- matrix(l,5,2,dimnames = list(c("對子(Pair)","三條(Triple)","葫蘆(Full House)","鐵支(Kind of four)","五枚(kind of five)"),c("次數(Frequence)","機率(Probability)")))
+  return(m)
 }
 
 #單雙出現次數
-parseSD <- function(result){
+frequenciesSD <- function(result){
   loc1 <- singleDouble(result$loc1)
   loc2 <- singleDouble(result$loc2)
   loc3 <- singleDouble(result$loc3)
   loc4 <- singleDouble(result$loc4)
   loc5 <- singleDouble(result$loc5)
-  loc <- list(loc1[[1]],loc1[[2]],loc2[[1]],loc2[[2]],loc3[[1]],loc3[[2]],loc4[[1]],loc4[[2]],loc5[[1]],loc5[[2]])
-  m <- matrix(loc,2,5,dimnames = list(c("單","雙"),c("萬位","千位","百位","拾位","個位")))
-  print(m)
+  loop <- length(result$loc1)
+  l11 <- round(loc1[[1]]/loop, digits = 4)
+  l12 <- round(loc1[[2]]/loop, digits = 4)
+  
+  l21 <- round(loc2[[1]]/loop, digits = 4)
+  l22 <- round(loc2[[2]]/loop, digits = 4)
+  
+  l31 <- round(loc3[[1]]/loop, digits = 4)
+  l32 <- round(loc3[[2]]/loop, digits = 4)
+  
+  l41 <- round(loc4[[1]]/loop, digits = 4)
+  l42 <- round(loc4[[2]]/loop, digits = 4)
+  
+  l51 <- round(loc5[[1]]/loop, digits = 4)
+  l52 <- round(loc5[[2]]/loop, digits = 4)
+  
+  loc <- list(loc1[[1]],loc1[[2]],l11,l12,loc2[[1]],loc2[[2]],l21,l22,loc3[[1]],loc3[[2]],l31,l32,loc4[[1]],loc4[[2]],l41,l42,loc5[[1]],loc5[[2]],l51,l52)
+  m <- matrix(loc,2,10,dimnames = list(c("單","雙"),c("萬位","機率值","千位","機率值","百位","機率值","拾位","機率值","個位","機率值")))
+  return(m)
 }
-
-# vendorId : 18LUCK , MANBETX ...
-# kind : NYSSC30S 
-# startDate : 2020-03-01
-# endDate   : 2020-03-09
-main <- function (vendorId,gameId,startDate,endDate){
-  loc <- list(vendorId,gameId,startDate,endDate)
-  m <- matrix(loc,1,4,dimnames = list(c("查詢條件"),c("廠商","玩法","起始","結束")))
-  print(m)
-  
-  
-  conn<-createConnection()
-  
-  
-  
-  result <- query(conn,vendorId,gameId,startDate,endDate)
-  
-  print(paste("total count =",length(result$loc1)))
-  
-  newList = count(result)
-  showMatrix(newList)
-  
-  parseSD(result)
-  loc.unique(result)
-  
-  normalTest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
-  ttest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
-  
-  closeConnection(conn)
-}
-
-#getReport('18LUCK','NYSSC30S','2020-03-01','2020-03-09')
-
-#for local test
-#result <- main("18LUCK",'NYSSC30S','2020-03-01','2020-03-09')
-#print(paste("total count =",length(result$loc1)))
-
-#print(length(result$loc1))
-#print(length(result$loc2))
-#print(length(result$loc3))
-#print(length(result$loc4))
-#print(length(result$loc5))
