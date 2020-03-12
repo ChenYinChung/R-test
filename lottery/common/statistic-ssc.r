@@ -1,8 +1,47 @@
 #陣列顯示
 frequenciesLocation <- function(list){
+
+  loop <- 0
+  for (v in list[[1]]){
+    loop <- loop + v
+  }  
+
+  print(loop)
+  plist1 <- list()
+  plist2 <- list()
+  plist3 <- list()
+  plist4 <- list()
+  plist5 <- list()
+  index <-1
+  for (v in list[[1]]){
+    plist1[index] <- round(v/loop,digits = 5)*10
+    index <- index +1
+  }
+  index <-1
+  for (v in list[[2]]){
+    plist2[index] <- round(v/loop,digits = 5)*10
+    index <- index +1
+  }
+  index <-1
+  for (v in list[[3]]){
+    plist3[index] <- round(v/loop,digits = 5)*10
+    index <- index +1
+  }
+  index <-1
+  for (v in list[[4]]){
+    plist4[index] <- round(v/loop,digits = 5)*10
+    index <- index +1
+  }
+  index <-1
+  for (v in list[[5]]){
+    plist5[index] <- round(v/loop,digits = 5)*10
+    index <- index +1
+  }
   
-  location <- c(list[[1]],list[[2]],list[[3]],list[[4]],list[[5]])
-  m <- matrix(location,10,5,dimnames = list(c("球號0","球號1","球號2","球號3","球號4","球號5","球號6","球號7","球號8","球號9"),c("萬位","千位","百位","拾位","個位")))
+  
+  location <- c(list[[1]],plist1,list[[2]],plist2,list[[3]],plist3,list[[4]],plist4,list[[5]],plist5)
+  m <- matrix(location,10,10,dimnames = list(c("球號0","球號1","球號2","球號3","球號4","球號5","球號6","球號7","球號8","球號9"),
+                                            c("萬位","機率","千位","機率","百位","機率","拾位","機率","個位","機率")))
   return(m)
   
 }
@@ -75,24 +114,52 @@ singleDouble <- function (loc){
 frequenciesUnique<- function(result){
   loop <- length(result$loc1)
   index <- 1
-  pairs <- 0
+  onePairs <- 0
+  twoPairs <- 0
   triple <- 0
   fourOfKind <-0
   fullHouse <-0
   fiveOfKind <- 0
+  diffFive <-0
   while(index<loop){
     l<-list(result$loc1[index],result$loc2[index],result$loc3[index],result$loc4[index],result$loc5[index])  
     x<-unique(l)
     if(length(x)==5){
-      #每個都不同 
+      #每個都不同
+      diffFive <- diffFive +1
     }else if(length(x)==4){
-      pairs <- pairs+1
+      # 一對
+      onePairs <- onePairs+1
     }else if(length(x)==3){
-      triple <- triple+1
-    }else if (length(x)==2){
+      #三條或兩對
       
+      v1 <- x[1]
+      v2 <- x[2]
+      v3 <- x[3]
+      
+      v1c<-0
+      v2c<-0
+      v3c<-0
+      for(v in l){
+        if(v == v1){
+          v1c <- v1c +1
+        }else if(v == v2){
+          v2c <- v2c +1
+        }else{
+          v3c <- v3c +1
+        }
+      }
+      # 
+      if(v1c == 3 || v2c==3 || v3c ==3){
+        triple <- triple+1
+      }else{
+        twoPairs <- twoPairs+1
+      }
+      
+    }else if (length(x)==2){
+      # 葫蘆或鐵支
       v1 <-l[1]
-      c <-0
+      c <- 0
       
       for(v in l){
         if(v==v1){
@@ -113,13 +180,14 @@ frequenciesUnique<- function(result){
     index<-index+1
   }
   
-  px <-round(pairs/loop,digits = 4)
-  pt <- round(triple/loop,digits = 4)
-  pfh <- round(fullHouse/loop,digits = 4)
-  pfk <-round(fourOfKind/loop,digits = 4)
-  pff <- round(fiveOfKind/loop,digits = 4)
-  l<- list(pairs,triple,fullHouse,fourOfKind,fiveOfKind,px,pt,pfh,pfk,pff)
-  m <- matrix(l,5,2,dimnames = list(c("對子(Pair)","三條(Triple)","葫蘆(Full House)","鐵支(Kind of four)","五枚(kind of five)"),c("次數(Frequence)","機率(Probability)")))
+  pOnePairs <-round(onePairs/loop,digits = 4)
+  pTwoPairs <-round(twoPairs/loop,digits = 4)
+  pTriple <- round(triple/loop,digits = 4)
+  pFullHouse <- round(fullHouse/loop,digits = 4)
+  pFourOfKind <-round(fourOfKind/loop,digits = 4)
+  pFiveOfKind <- round(fiveOfKind/loop,digits = 4)
+  l<- list(onePairs,twoPairs,triple,fullHouse,fourOfKind,fiveOfKind,pOnePairs,pTwoPairs,pTriple,pFullHouse,pFourOfKind,pFiveOfKind)
+  m <- matrix(l,6,2,dimnames = list(c("一對(Pair)","二對(TwoPair)","三條(Triple)","葫蘆(Full House)","鐵支(Kind of four)","五枚(kind of five)"),c("次數(Frequence)","機率(Probability)")))
   return(m)
 }
 

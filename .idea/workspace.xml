@@ -1,11 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5860ed17-f480-425f-a840-d365e7073639" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/txffc/db01-crawler.r" beforeDir="false" afterPath="$PROJECT_DIR$/txffc/db01-crawler.r" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/txffc/txffc.r" beforeDir="false" afterPath="$PROJECT_DIR$/txffc/txffc.r" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1YjhIGPx48kQSyXdj1cBI0VdczA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/txffc" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5860ed17-f480-425f-a840-d365e7073639" name="Default Changelist" comment="" />
+      <created>1583461828660</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583461828660</updated>
+    </task>
+    <task id="LOCAL-00001" summary="refactor">
+      <created>1583730053448</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583730053448</updated>
+    </task>
+    <task id="LOCAL-00002" summary="refactor">
+      <created>1583751858100</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1583751858100</updated>
+    </task>
+    <task id="LOCAL-00003" summary="refactor unit entry">
+      <created>1583751891365</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1583751891365</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactor" />
+    <MESSAGE value="refactor unit entry" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor unit entry" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2523" y="156" key="CommitChangelistDialog2" timestamp="1583751891289">
+      <screen x="1920" y="23" width="1920" height="1057" />
+    </state>
+    <state x="2523" y="156" key="CommitChangelistDialog2/0.23.1920.1129/1920.23.1920.1057@1920.23.1920.1057" timestamp="1583751891289" />
+    <state x="2480" y="293" key="Vcs.Push.Dialog.v2" timestamp="1583751892795">
+      <screen x="1920" y="23" width="1920" height="1057" />
+    </state>
+    <state x="2480" y="293" key="Vcs.Push.Dialog.v2/0.23.1920.1129/1920.23.1920.1057@1920.23.1920.1057" timestamp="1583751892795" />
   </component>
 </project>

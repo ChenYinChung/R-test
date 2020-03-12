@@ -68,5 +68,5 @@ main <- function (vendorId,gameId,startDate,endDate){
 #自開彩獎號驗證，以Production實際內容比對
 #
 #
-main("18LUCK",'NYSSC30S','2020-03-01','2020-03-10')
+main("18LUCK",'NYSSC30S','2020-03-01','2020-03-12')
 main("MANBETX",'NYSSC30S','2020-03-01','2020-03-10')

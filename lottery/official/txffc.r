@@ -70,5 +70,6 @@ main <- function (game,crawler,startDate,endDate){
 #
 #
 print("================= TXFFC")
-main("TXFFC",'TJ','2020-03-01','2020-03-09')
+main("TXFFC",'TJ','2020-03-01','2020-03-12')
 print("================= TXFFC======================")
+
