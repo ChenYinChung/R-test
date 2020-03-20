@@ -33,6 +33,7 @@ avg <- 172
 # 常態性檢定
 #shapiro.test(x)
 t.test(x,mu=avg)
+t.test(y,mu=avg)
 
 
 #獨立雙樣本 t 檢定

@@ -37,39 +37,16 @@ query <- function(conn,game,crawler, startDate, endDate){
 # endDate   : 2020-03-09
 main <- function (game,crawler,startDate,endDate){
   conn<-createConnection()
-  result <- query(conn,game,crawler,startDate,endDate)
-  
-  # show title
-  loc <- list(game,crawler,startDate,endDate,length(result$loc1))
-  m <- matrix(loc,1,5,dimnames = list(c("查詢條件"),c("玩法","獎源","開始","結束","筆數")))
-  print(m)
-  
-
-  newList = count(result)
-  # 五位數出現次數
-  fl <- frequenciesLocation(newList)
-  print(fl)
-  
-  # 位數單雙
-  fre <- frequenciesSD(result)
-  print(fre)
-  
-  # 出現次數，對子，三條
-  fu<-frequenciesUnique(result)
-  print(fu)
-  
-  n<-normalTest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
-  print(n)
-  t<-ttest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
-  print(t)
+  report(conn,game,crawler,startDate,endDate)
   closeConnection(conn)
+  
 }
 
 #
 # 官方彩，統一在STG db 讀取crawler寫入的資料
-#
+# KTJ,OPEN_CAI,MANY_CAI
 #
 print("================= TXFFC")
-main("TXFFC",'TJ','2020-03-01','2020-03-12')
+main("CQSSC",'MANY_CAI','2020-03-15','2020-03-16')
 print("================= TXFFC======================")
 

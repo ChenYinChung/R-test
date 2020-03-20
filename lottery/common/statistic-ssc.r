@@ -6,7 +6,6 @@ frequenciesLocation <- function(list){
     loop <- loop + v
   }  
 
-  print(loop)
   plist1 <- list()
   plist2 <- list()
   plist3 <- list()
@@ -37,7 +36,6 @@ frequenciesLocation <- function(list){
     plist5[index] <- round(v/loop,digits = 5)*10
     index <- index +1
   }
-  
   
   location <- c(list[[1]],plist1,list[[2]],plist2,list[[3]],plist3,list[[4]],plist4,list[[5]],plist5)
   m <- matrix(location,10,10,dimnames = list(c("球號0","球號1","球號2","球號3","球號4","球號5","球號6","球號7","球號8","球號9"),
@@ -217,4 +215,43 @@ frequenciesSD <- function(result){
   loc <- list(loc1[[1]],loc1[[2]],l11,l12,loc2[[1]],loc2[[2]],l21,l22,loc3[[1]],loc3[[2]],l31,l32,loc4[[1]],loc4[[2]],l41,l42,loc5[[1]],loc5[[2]],l51,l52)
   m <- matrix(loc,2,10,dimnames = list(c("單","雙"),c("萬位","機率值","千位","機率值","百位","機率值","拾位","機率值","個位","機率值")))
   return(m)
+}
+
+title<- function(game,crawler,startDate,endDate,result){
+  # show title
+  loc <- list(game,crawler,startDate,endDate,length(result$loc1)," ")
+  m <- matrix(loc,1,6,dimnames = list(c("查詢條件"),c(" ","玩法","獎源","開始","結束","筆數")))
+  return(m)  
+}
+
+report <- function(conn,game,crawler,startDate,endDate){
+  result <- query(conn,game,crawler,startDate,endDate)
+  
+  ttl <- title(game,crawler,startDate,endDate,result)
+  
+  newList = count(result)
+  # 五位數出現次數
+  fl <- frequenciesLocation(newList)
+  print(fl)
+  # 位數單雙
+  fre <- frequenciesSD(result)
+  print(fre)
+  
+  # 出現次數，對子，三條
+  fu<-frequenciesUnique(result)
+  print(fu)
+  
+  n<-normalTest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
+  print(n)
+  
+  t<-ttest(as.numeric(newList[[1]]),as.numeric(newList[[2]]),as.numeric(newList[[3]]),as.numeric(newList[[4]]),as.numeric(newList[[5]]))
+  print(t)
+  
+  fn = paste0(game,"-",startDate,"-",endDate,".csv")
+  write.table(x = ttl,file = fn,append = F,sep = ',')
+  write.table(x = fl,file = fn,append = T,sep = ',')
+  write.table(x = fre,file = fn,append = T,sep = ',')
+  write.table(x = fu,file = fn,append = T,sep = ',')
+  #write.table(x = n,file = fn,append = T,sep = ',')
+  #write.table(x = t,file = fn,append = T,sep = ',')
 }
